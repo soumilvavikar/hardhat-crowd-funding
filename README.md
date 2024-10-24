@@ -48,13 +48,10 @@ The contract will trigger an event on:
 ```shell
 # Initialize NPM
 npm init
-
 # Install hardhat if not done already
 npm install --save-dev hardhat
-
 # Initialize the hardhat project (select a valid option)
 npx hardhat init
-
 # Install the openzeppelin contract to using ERC721 interface
 npm install --save-dev @openzeppelin/contracts
 ```
@@ -64,7 +61,6 @@ npm install --save-dev @openzeppelin/contracts
 ```shell
 # Compile the project
 npx hardhat compile
-
 # Run the tests
 npx hardhat test
 ```
@@ -74,7 +70,6 @@ npx hardhat test
 ```shell
 # Spin the local chain
 npx hardhat node
-
 # Deploy the contract / hardhat project
 npx hardhat ignition deploy ignition/modules/CrowdFundingModule.js --network localhost
 
