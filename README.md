@@ -16,7 +16,7 @@ We will leverage the solidity data types, struct, and mapping to store the above
 
 **Actions Users Can Perform on the Smart Contract**:
 
-There can be two types of users: The crowdfunding / fund-raising owner and the contributor.  Each can perform the following functions: 
+There can be two types of users: The crowdfunding / fund-raising owner and the contributor.  Each can perform the following functions:
 
 **Owner**:
 
