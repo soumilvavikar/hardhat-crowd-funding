@@ -1,0 +1,16 @@
+{
+  "name": "hardhat-crowd-funding",
+  "version": "1.0.0",
+  "description": "This project contains a hardhat based crowd funding contract.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Soumil Vavikar",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.1.0",
+    "hardhat": "^2.22.14"
+  }
+}
