@@ -198,7 +198,61 @@ describe("CrowdFunding", function () {
         it("Should return correct total NFTs issued", async function () {
             await crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: minContribution });
             await crowdFunding.connect(addr2).contribute("Jane", lastName, "jane@example.com", { value: minContribution });
-            expect(await crowdFunding.getTotalNFTsIssued()).to.equal(2);
+            expect(await crowdFunding.getCountOfNFTsIssued()).to.equal(2);
+        });
+    });
+
+    /**
+     * Test cases for the owner function updating the CrowdFunding goal
+     */
+    describe("updateCrowdFundingGoal", function () {
+        it("Should allow owner to update the crowdfunding goal", async function () {
+            const newGoal = ethers.parseEther("15");
+            await crowdFunding.updateCrowdFundingGoal(newGoal);
+            expect(await crowdFunding.s_crowdFundingGoal()).to.equal(newGoal);
+        });
+
+        it("Should revert if new goal is less than or equal to total contributions", async function () {
+            // Contribute some amount
+            await crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: ethers.parseEther("5") });
+
+            // Try to set new goal less than total contributions
+            const newGoal = ethers.parseEther("4");
+            await expect(crowdFunding.updateCrowdFundingGoal(newGoal))
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__NewGoalShouldBeGreaterThanTotalContributions")
+                .withArgs("New goal should be greater than total contributions made till now.");
+        });
+
+        it("Should revert if called by non-owner", async function () {
+            const newGoal = ethers.parseEther("15");
+            await expect(crowdFunding.connect(addr1).updateCrowdFundingGoal(newGoal))
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerCanWithdraw")
+                .withArgs("Only the owner can withdraw");
+        });
+    });
+
+    /**
+     * Test cases for the owner function updating the CrowdFunding duration
+     */
+    describe("updateMinimumContribution", function () {
+        it("Should allow owner to update the minimum contribution", async function () {
+            const newMinContribution = ethers.parseEther("0.2");
+            await crowdFunding.updateMinimumContribution(newMinContribution);
+            expect(await crowdFunding.s_minContribution()).to.equal(newMinContribution);
+        });
+
+        it("Should revert if new minimum contribution is less than or equal to 0", async function () {
+            const newMinContribution = 0;
+            await expect(crowdFunding.updateMinimumContribution(newMinContribution))
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__MinimumContributionMustBeGreaterThanZero")
+                .withArgs("Contribution should be greater than minimum contribution");
+        });
+
+        it("Should revert if called by non-owner", async function () {
+            const newMinContribution = ethers.parseEther("0.2");
+            await expect(crowdFunding.connect(addr1).updateMinimumContribution(newMinContribution))
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerCanWithdraw")
+                .withArgs("Only the owner can withdraw");
         });
     });
 });

@@ -60,8 +60,16 @@ contract CrowdFunding is ERC721 {
         s_CrowdFundingEndTime = block.timestamp + _duration;
         // Set the crowd funding state to open
         isOpen = true;
+
+        console.log("CrowdFunding contract deployed by %s", i_owner);
+        console.log("Minimum Contribution: %s", s_minContribution);
+        console.log("CrowdFunding Goal: %s", s_crowdFundingGoal);
+        console.log("CrowdFunding End Time: %s", s_CrowdFundingEndTime);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// MODIFIERS  //////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * This modifier will check whether the send of the message is the owner of the contract or not
      */
@@ -98,6 +106,19 @@ contract CrowdFunding is ERC721 {
         _;
     }
 
+    /**
+     * This modifier will check whether the crowd funding is still open or not
+     */
+    modifier insideCrowdFundingDuration() {
+        if (block.timestamp > s_CrowdFundingEndTime) {
+            revert CrowdFundingErrors.CrowdFunding__CrowdFundingIsClosed("Crowdfunding is closed");
+        }
+        _;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// PUBLIC FUNCTIONS  ////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * This function will be used to mint the NFT token based on the token URI
      */
@@ -154,20 +175,6 @@ contract CrowdFunding is ERC721 {
     }
 
     /**
-     * Fallback function to revert the transaction if someone tries to send ether to the contract
-     */
-    fallback() external payable {
-        revert CrowdFundingErrors.CrowdFunding__CallContributeFunction("Call contribute function");
-    }
-
-    /**
-     * Receive function to revert the transaction if someone tries to send ether to the contract
-     */
-    receive() external payable {
-        revert CrowdFundingErrors.CrowdFunding__CallContributeFunction("Call contribute function");
-    }
-
-    /**
      * This function will be used to withdraw the funds from the contract
      *
      * @notice - This function will only be called by the owner of the contract
@@ -184,6 +191,64 @@ contract CrowdFunding is ERC721 {
         }
     }
 
+    /**
+     * This function will be used to update the crowd funding goal
+     *
+     * @param _newGoal - New goal of the CrowdFunding
+     *
+     * @notice - This function will only be called by the owner of the contract
+     * @notice - This function will only be called if the new goal is greater than the total contributions made till now
+     * @notice - This function will only be called if the crowd funding is still inside the funding duration
+     */
+    function updateCrowdFundingGoal(uint256 _newGoal) public isOwner insideCrowdFundingDuration {
+        if (_newGoal <= s_totalContributions) {
+            revert CrowdFundingErrors.CrowdFunding__NewGoalShouldBeGreaterThanTotalContributions(
+                "New goal should be greater than total contributions made till now."
+            );
+        }
+
+        s_crowdFundingGoal = _newGoal;
+        // if the limit to funding was reached, the contract would have closed the crowd funding. Hence need to open it again
+        isOpen = true;
+    }
+
+    /**
+     * This function will be used to update the minimum contribution
+     *
+     * @param _newMinimumContribution - New minimum contribution
+     *
+     * @notice - This function will only be called by the owner of the contract
+     * @dev - This function will only be called if the new minimum contribution is greater than 0
+     */
+    function updateMinimumContribution(uint256 _newMinimumContribution) public isOwner onlyIfCrowdFundingIsOpen {
+        if (_newMinimumContribution <= 0) {
+            revert CrowdFundingErrors.CrowdFunding__MinimumContributionMustBeGreaterThanZero(
+                "Contribution should be greater than minimum contribution"
+            );
+        }
+        s_minContribution = _newMinimumContribution;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////// EXTERNAL FUNCTIONS  //////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Fallback function to revert the transaction if someone tries to send ether to the contract
+     */
+    fallback() external payable {
+        revert CrowdFundingErrors.CrowdFunding__CallContributeFunction("Call contribute function");
+    }
+
+    /**
+     * Receive function to revert the transaction if someone tries to send ether to the contract
+     */
+    receive() external payable {
+        revert CrowdFundingErrors.CrowdFunding__CallContributeFunction("Call contribute function");
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////// INTERNAL / PRIVATE FUNCTIONS  //////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * This function will be used to add or update the contributor to the list of contributors
      *
@@ -249,23 +314,9 @@ contract CrowdFunding is ERC721 {
         return (false, -1);
     }
 
-    /**
-     * This function will be used to get the total contribution of the contributor
-     *
-     * @return uint256 - Total contribution of the contributor
-     *
-     * @notice - This function will be called by the contributor to get their total contribution
-     */
-    function getTotalContributionByContributor() public view returns (uint256) {
-        uint256 totalContribution = 0;
-        for (uint256 i = 0; i < s_contributors.length; i++) {
-            if (s_contributors[i].contributorAddress == msg.sender) {
-                totalContribution = s_contributors[i].totalContributions;
-            }
-        }
-        return totalContribution;
-    }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////// PUBLIC / VIEW / PURE FUNCTIONS  ////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * This function will be used to get the list of the contributor
      *
@@ -296,8 +347,25 @@ contract CrowdFunding is ERC721 {
      *
      * @dev - This function will only be called by the owner of the contract
      */
-    function getTotalNFTsIssued() public view isOwner returns (uint256) {
+    function getCountOfNFTsIssued() public view isOwner returns (uint256) {
         return s_tokenCounter;
+    }
+
+    /**
+     * This function will be used to get the total contribution of the contributor
+     *
+     * @return uint256 - Total contribution of the contributor
+     *
+     * @notice - This function will be called by the contributor to get their total contribution
+     */
+    function getTotalContributionByContributor() public view returns (uint256) {
+        uint256 totalContribution = 0;
+        for (uint256 i = 0; i < s_contributors.length; i++) {
+            if (s_contributors[i].contributorAddress == msg.sender) {
+                totalContribution = s_contributors[i].totalContributions;
+            }
+        }
+        return totalContribution;
     }
 
     /**
@@ -305,5 +373,33 @@ contract CrowdFunding is ERC721 {
      */
     function isDeployed() external pure returns (string memory) {
         return "Contract is deployed successfully...";
+    }
+
+    /**
+     * This function will be used to get the minimum contribution
+     */
+    function getMinimumContribution() public view returns (uint256) {
+        return s_minContribution;
+    }
+
+    /**
+     * This function will be used to get the crowd funding goal
+     */
+    function getCrowdFundingGoal() public view returns (uint256) {
+        return s_crowdFundingGoal;
+    }
+
+    /**
+     * This function will be used to get the crowd funding end time
+     */
+    function getCrowdFundingEndTime() public view returns (uint256) {
+        return s_CrowdFundingEndTime;
+    }
+    
+    /**
+     * This function will be used to check if the crowd funding is open or not
+     */
+    function isCrowdFundingOpen() public view returns (bool) {
+        return isOpen;
     }
 }

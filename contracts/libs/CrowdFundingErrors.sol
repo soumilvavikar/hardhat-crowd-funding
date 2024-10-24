@@ -10,4 +10,6 @@ library CrowdFundingErrors {
     error CrowdFunding__OnlyOwnerCanWithdraw(string message);
     error CrowdFunding__WithdrawFailed(string message);
     error CrowdFunding__CallContributeFunction(string message);
+    error CrowdFunding__NewGoalShouldBeGreaterThanTotalContributions(string message);
+    error CrowdFunding__MinimumContributionMustBeGreaterThanZero(string message);
 }

@@ -77,3 +77,21 @@ npx hardhat ignition deploy ignition/modules/CrowdFundingModule.js --network loc
 ### If in the above command, the --network localhost is not passed, then it by default deploys to local network.
 ### If you need to do multiple deployments of the contract use --deployment-id <unique-deployment-id> along with the command.
 ```
+
+## Testing the Contract Functionality
+
+```shell
+# Test the contribute function
+npx hardhat run interactions/Contribute.js --network localhost
+# Test the owner interactions like get the total count of NFTs issued, get the list of Contributors, and total funds raised.
+npx hardhat run interactions/OwnerInteractions.js --network localhost
+# Contribute to the crowd funding to reach the goal (so that withdrawl can be called)
+## Withdrawl can be called if crowd funding has closed. And crowd funding closes if the goal is reached or the time has passed.
+npx hardhat run interactions/ContributeToReachGoalLimit.js --network localhost
+# Test the getter functions
+npx hardhat run interactions/GetterInteractions.js --network localhost
+
+# Withdrawl interaction
+### FIXME - This flow needs to be tested once. 
+npx hardhat run interactions/Withdraw.js --network localhost
+```
