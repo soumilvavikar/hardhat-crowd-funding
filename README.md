@@ -52,7 +52,7 @@ npm init
 npm install --save-dev hardhat
 # Initialize the hardhat project (select a valid option)
 npx hardhat init
-# Install the openzeppelin contract to using ERC721 interface
+# Install the openzeppelin contract to use ERC721 interface
 npm install --save-dev @openzeppelin/contracts
 ```
 
