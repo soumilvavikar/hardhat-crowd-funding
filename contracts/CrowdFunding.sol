@@ -86,7 +86,7 @@ contract CrowdFunding is ERC721 {
      * This modifier will check whether the crowd funding is closed or not
      */
     modifier onlyIfCrowdFundingIsClosed() {
-        if (block.timestamp < s_CrowdFundingEndTime) {
+        if ((block.timestamp < s_CrowdFundingEndTime) && isOpen) {
             revert CrowdFundingErrors.CrowdFunding__CrowdFundingIsStillOpen("Crowdfunding is still open");
         }
         _;
@@ -126,6 +126,7 @@ contract CrowdFunding is ERC721 {
         s_tokenIdToUri[s_tokenCounter] = tokenUri;
         _safeMint(msg.sender, s_tokenCounter);
         tokenId = s_tokenCounter++;
+        console.log("NFT minted with token ID: %s", tokenId);
     }
 
     /**
@@ -273,14 +274,14 @@ contract CrowdFunding is ERC721 {
 
         // If the contributor is not present, then add the contributor to the list of contributors
         if (!isContributorPresent) {
-            ContributorLib.Contributor memory newContributor = ContributorLib.Contributor({
-                contributorAddress: msg.sender,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                tokenIds: new uint256[](tokenId),
-                totalContributions: msg.value
-            });
+            ContributorLib.Contributor memory newContributor;
+            newContributor.contributorAddress = msg.sender;
+            newContributor.firstName = firstName;
+            newContributor.lastName = lastName;
+            newContributor.email = email;
+            newContributor.tokenIds = new uint256[](1);
+            newContributor.tokenIds[0] = tokenId;
+            newContributor.totalContributions = msg.value;
             // Add the contributor to the list of contributors
             s_contributors.push(newContributor);
             console.log("Contributor added");
@@ -401,5 +402,14 @@ contract CrowdFunding is ERC721 {
      */
     function isCrowdFundingOpen() public view returns (bool) {
         return isOpen;
+    }
+
+    /**
+     * This function will be used to get the token URI of the NFT
+     *
+     * @param tokenId - Token ID of the NFT
+     */
+    function getTokenURI(uint256 tokenId) public view returns (string memory) {
+        return s_tokenIdToUri[tokenId];
     }
 }

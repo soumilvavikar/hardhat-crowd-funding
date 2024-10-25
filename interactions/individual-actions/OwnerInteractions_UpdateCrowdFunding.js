@@ -6,20 +6,26 @@ async function main() {
     // This line will help retrieve the contract (when functions are called, they will be called as if the owner is calling them)
     const crowdFunding = await hre.ethers.getContractAt("CrowdFunding", contractAddress);
 
-    // Get the crowd funding end time
-    const endTime = await crowdFunding.getCrowdFundingEndTime();
-    console.log("Crowd funding End Time:", endTime);
-
     // Get the funding goal
     const fundingGoal = await crowdFunding.getCrowdFundingGoal();
     console.log("Funding Goal (ETH):  ", Number(fundingGoal)/Number(1e18));
+
+    // Update the funding goal
+    await crowdFunding.updateCrowdFundingGoal(BigInt(ethers.parseEther("10000")));
+
+    // Get the funding goal
+    const fundingGoalAfterUpdate = await crowdFunding.getCrowdFundingGoal();
+    console.log("Funding Goal (ETH) after Update:  ", Number(fundingGoalAfterUpdate)/Number(1e18));
 
     // Get the minimum contribution
     const minimiumContribution = await crowdFunding.getMinimumContribution();
     console.log("Minimium Contribution (ETH):  ", Number(minimiumContribution)/Number(1e18));
 
-    // Check if the crowd funding is open
-    console.log("Is Crowd Funding Open: ", await crowdFunding.isCrowdFundingOpen());
+    await crowdFunding.updateMinimumContribution(BigInt(ethers.parseEther("0.2")));
+
+    // Get the minimum contribution
+    const minimiumContributionAfterUpdate = await crowdFunding.getMinimumContribution();
+    console.log("Minimium Contribution (ETH) after Update:  ", Number(minimiumContributionAfterUpdate)/Number(1e18));
 }
 
 main()

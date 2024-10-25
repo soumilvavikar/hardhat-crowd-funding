@@ -1,0 +1,208 @@
+npx hardhat test
+
+
+  CrowdFunding
+    Deployment
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496684
+      ✔ Should set the right owner
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496685
+      ✔ Should set the correct minimum contribution
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496686
+      ✔ Should set the correct crowdfunding goal
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496687
+      ✔ Should set the correct end time
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496688
+      ✔ Should initialize as open
+    Input Validation
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496689
+      ✔ Should reject contributions with empty firstName
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496691
+      ✔ Should reject contributions with empty lastName
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496693
+      ✔ Should reject contributions with empty email
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496695
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should accept contributions with all fields filled
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496697
+      ✔ Should reject contributions with all fields empty
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496699
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should allow valid contributions
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496701
+      ✔ Should reject contributions below minimum
+    Contributions
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496703
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should update total contributions
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496705
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should mint NFT for contributor
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496707
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should close crowdfunding when goal is reached
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1730496709
+      ✔ Should reject contributions when crowdfunding is closed
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731101512
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should return tokenUri for the passed tokenId
+    Withdrawals
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731101514
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should allow owner to withdraw after crowdfunding ends
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706318
+      ✔ Should not allow non-owners to withdraw
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706320
+      ✔ Should not allow withdrawal before crowdfunding ends
+    Contributor Management
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706322
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should add new contributor
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706324
+NFT minted with token ID: 0
+Contributor added
+NFT minted with token ID: 1
+Contributor already exists
+      ✔ Should update existing contributor
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706327
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should return correct total contribution for a contributor
+    Miscellaneous
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706329
+      ✔ Should reject direct transfers
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706331
+NFT minted with token ID: 0
+Contributor added
+NFT minted with token ID: 1
+Contributor added
+      ✔ Should return correct total funds raised
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706334
+NFT minted with token ID: 0
+Contributor added
+NFT minted with token ID: 1
+Contributor added
+      ✔ Should return correct total NFTs issued
+    updateCrowdFundingGoal
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706337
+      ✔ Should allow owner to update the crowdfunding goal
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706339
+NFT minted with token ID: 0
+Contributor added
+      ✔ Should revert if new goal is less than or equal to total contributions
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706342
+      ✔ Should revert if called by non-owner
+    updateMinimumContribution
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706344
+      ✔ Should allow owner to update the minimum contribution
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706346
+      ✔ Should revert if new minimum contribution is less than or equal to 0
+CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+Minimum Contribution: 100000000000000000
+CrowdFunding Goal: 10000000000000000000
+CrowdFunding End Time: 1731706348
+      ✔ Should revert if called by non-owner
+
+
+  32 passing (2s)
+

@@ -132,6 +132,12 @@ describe("CrowdFunding", function () {
             await expect(crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: minContribution }))
                 .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__CrowdFundingIsClosed");
         });
+
+        it("Should return tokenUri for the passed tokenId", async function () {
+            await crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: minContribution });
+            const tokenId = await crowdFunding.getTokenURI(0);
+            expect(tokenId).to.equal(`https://ipfs.io/ipfs/QmXW1JcRvBuzW7v5KkxyWxrsWWtJJiGQNTdCuUceYC2Nw2?filename=bike.png`);
+        });
     });
 
     /**

@@ -65,6 +65,10 @@ npx hardhat compile
 npx hardhat test
 ```
 
+### Test Evidence(s) - Unit Testing
+
+Unit testing evidences are documented in the [README_UNIT_TESTING.md](testevidences/README_UNIT_TESTING.md) file.
+
 ## Starting the local chain and Deploying the Contract
 
 ```shell
@@ -78,20 +82,35 @@ npx hardhat ignition deploy ignition/modules/CrowdFundingModule.js --network loc
 ### If you need to do multiple deployments of the contract use --deployment-id <unique-deployment-id> along with the command.
 ```
 
+### Test Evidence(s) - Deployment
+
+Local Chain Start-up and Contract deployment evidences are documented in the [README_EVIDENCES_DEPLOYMENT.md](testevidences/README_EVIDENCES_DEPLOYMENT).
+
 ## Testing the Contract Functionality
+
+### Command for End to End Testing via Interactions
+
+```shell
+# Run all the functions to test the flow end to end.
+npx hardhat run interactions/end-to-end/InteractingWithCrowdFundingContract.js --network localhost
+```
+
+The end to end testing test evidences are documented in the [README_E2E_TEST_EVIDENCES.md](testevidences/README_E2E_TEST_EVIDENCES.md).
+
+### Commands for Indvidual Function Testing Based on the User (Owner / Contributor)
 
 ```shell
 # Test the contribute function
-npx hardhat run interactions/Contribute.js --network localhost
+npx hardhat run interactions/individual-actions/Contribute.js --network localhost
 # Test the owner interactions like get the total count of NFTs issued, get the list of Contributors, and total funds raised.
-npx hardhat run interactions/OwnerInteractions.js --network localhost
+npx hardhat run interactions/individual-actions/OwnerInteractions.js --network localhost
 # Contribute to the crowd funding to reach the goal (so that withdrawl can be called)
 ## Withdrawl can be called if crowd funding has closed. And crowd funding closes if the goal is reached or the time has passed.
-npx hardhat run interactions/ContributeToReachGoalLimit.js --network localhost
+npx hardhat run interactions/individual-actions/ContributeToReachGoalLimit.js --network localhost
 # Test the getter functions
-npx hardhat run interactions/GetterInteractions.js --network localhost
-
+npx hardhat run interactions/individual-actions/GetterInteractions.js --network localhost
 # Withdrawl interaction
-### FIXME - This flow needs to be tested once. 
-npx hardhat run interactions/Withdraw.js --network localhost
+npx hardhat run interactions/individual-actions/Withdraw.js --network localhost
+# Update the Crowd funding goal and minimum contribution
+npx hardhat run interactions/individual-actions/OwnerInteractions_UpdateCrowdFunding.js --network localhost
 ```

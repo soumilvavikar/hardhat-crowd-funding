@@ -1,0 +1,72 @@
+npx hardhat run interactions/end-to-end/InteractingWithCrowdFundingContract.js --network localhost
+********************************************************
+********************************************************
+Contributing to the crowd funding
+********************************************************
+Contributed to the crowd funding. Transaction Hash:  0xc629d3198bc45819d6f1b871bb5255565e28fa403375112ca835140c797d4d25
+********************************************************
+Checking the total contributions made by the contributor
+********************************************************
+Total Contributions Made (ETH):   5
+********************************************************
+Testing standard getter functions
+********************************************************
+Crowd funding End Time: 1729978020n
+Funding Goal (ETH):   1000
+Minimium Contribution (ETH):   0.1
+Token URI for tokenId = 0:  https://ipfs.io/ipfs/QmXW1JcRvBuzW7v5KkxyWxrsWWtJJiGQNTdCuUceYC2Nw2?filename=bike.png
+Is Crowd Funding Open:  true
+********************************************************
+Contributing to reach the funding goal
+********************************************************
+Contributed to the crowd funding. Transaction Hash:  0x76c610a4155dd2cba4d7337d86ce93bea20494bf92d540348ba28112554a415a
+********************************************************
+Checking the total contributions made by the contributor
+********************************************************
+Total Contributions Made (ETH):   1000
+********************************************************
+Withdrawing the funds from the crowd funding
+********************************************************
+Total Funds (ETH) in the crowd funding (pre-withdrawl):   1005
+Withdrawing the funds from the crowd funding
+Funds have been withdrawn from the crowd funding
+Total Funds (ETH) in the funding (post withdrawl):   1005
+********************************************************
+Updating the funding goal and minimum contribution
+********************************************************
+Funding Goal (ETH):   1000
+Funding Goal (ETH) after Update:   10000
+Minimium Contribution (ETH):   0.1
+Minimium Contribution (ETH) after Update:   0.2
+********************************************************
+Testing standard getter functions
+********************************************************
+Crowd funding End Time: 1729978020n
+Funding Goal (ETH):   10000
+Minimium Contribution (ETH):   0.2
+Token URI for tokenId = 0:  https://ipfs.io/ipfs/QmXW1JcRvBuzW7v5KkxyWxrsWWtJJiGQNTdCuUceYC2Nw2?filename=bike.png
+Is Crowd Funding Open:  true
+********************************************************
+Testing owner functions
+********************************************************
+Total NFTs Issued: 2
+List of People who contributed to the crowd funding:   Result(2) [
+  Result(6) [
+    '0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199',
+    'Soumil',
+    'Vavikar',
+    'soumilvavikar@student.purdueglobal.edu',
+    Result(1) [ 0n ],
+    5000000000000000000n
+  ],
+  Result(6) [
+    '0x976EA74026E726554dB657fA54763abd0C3a0aa9',
+    'Someone',
+    'Else',
+    'someoneelse@student.purdueglobal.edu',
+    Result(1) [ 1n ],
+    1000000000000000000000n
+  ]
+]
+Total Funds Raised (ETH):   1005
+********************************************************

@@ -8,7 +8,7 @@ async function main() {
 
     // Check the total number of NFTs issued
     const nftsIssued = await crowdFunding.getCountOfNFTsIssued();
-    console.log("Total NFTs Issued:", nftsIssued);
+    console.log("Total NFTs Issued:", Number(nftsIssued));
 
     // Get the People who have contributed to the crowd funding using the getFunders
     const funders = await crowdFunding.getFunders();

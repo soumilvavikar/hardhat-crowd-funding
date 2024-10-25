@@ -17,9 +17,9 @@ async function main() {
     console.log("Funds have been withdrawn from the crowd funding");
 
     // Check the balance of the contractAddress after withdrawl
-    fundsRaised = await crowdFunding.getTotalFundsRaised();
+    const fundsRaisedAfterWithdraw = await crowdFunding.getTotalFundsRaised();
     // This should be zero after the withdraw has happened.
-    console.log("Total Funds (ETH) in the funding (post withdrawl):  ", Number(fundsRaised)/Number(1e18));
+    console.log("Total Funds (ETH) in the funding (post withdrawl):  ", Number(fundsRaisedAfterWithdraw)/Number(1e18));
 }
 
 main()

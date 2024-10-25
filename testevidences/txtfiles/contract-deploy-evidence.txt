@@ -1,0 +1,91 @@
+soumilvavikar@Soumils-XPS15:~/workspaces/hardhat-workspaces/hardhat-crowd-funding$ npx hardhat ignition deploy ignition/modules/CrowdFundingModule.js --network localhost
+Hardhat Ignition 🚀
+
+Deploying [ CrowdFunding ]
+
+Batch #1
+  Executed CrowdFunding#CrowdFunding
+
+Batch #2
+  Executed CrowdFunding#CrowdFunding.isDeployed
+
+[ CrowdFunding ] successfully deployed 🚀
+
+Deployed Addresses
+
+CrowdFunding#CrowdFunding - 0x5FbDB2315678afecb367f032d93F642f64180aa3
+
+
+
+-----------------------------------------------------------------------------------------------------------
+Local Chain Logs
+-----------------------------------------------------------------------------------------------------------
+
+WARNING: These accounts, and their private keys, are publicly known.
+Any funds sent to them on Mainnet or any other live network WILL BE LOST.
+
+eth_chainId
+hardhat_metadata
+eth_accounts
+hardhat_getAutomine
+eth_chainId
+eth_getBlockByNumber
+eth_getTransactionCount (3)
+eth_getBlockByNumber
+eth_getTransactionCount
+eth_getBlockByNumber
+eth_chainId
+eth_maxPriorityFeePerGas
+eth_estimateGas
+eth_call
+  Contract deployment: CrowdFunding
+  Contract address:    0x5fbdb2315678afecb367f032d93f642f64180aa3
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+
+  console.log:
+    CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+    Minimum Contribution: 100000000000000000
+    CrowdFunding Goal: 1000000000000000000000
+    CrowdFunding End Time: 1729979925
+
+eth_sendTransaction
+  Contract deployment: CrowdFunding
+  Contract address:    0x5fbdb2315678afecb367f032d93f642f64180aa3
+  Transaction:         0x5a4fb981d4d28e96316ff8836a8afa04a69533a74e0f1866d56c8fcebfee5064
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  Value:               0 ETH
+  Gas used:            4300273 of 4300273
+  Block #1:            0xf056c7e5ba96add64916a2d291aaac6a8c2a4a5e0ce425b60e1687938df7ab4c
+
+  console.log:
+    CrowdFunding contract deployed by 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+    Minimum Contribution: 100000000000000000
+    CrowdFunding Goal: 1000000000000000000000
+    CrowdFunding End Time: 1729979925
+
+eth_getTransactionByHash
+eth_getBlockByNumber
+eth_getTransactionReceipt
+eth_getBlockByNumber
+eth_getTransactionCount
+eth_getBlockByNumber
+eth_chainId
+eth_maxPriorityFeePerGas
+eth_estimateGas
+eth_call
+  Contract call:       CrowdFunding#isDeployed
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+
+eth_sendTransaction
+  Contract call:       CrowdFunding#isDeployed
+  Transaction:         0x5807f85b8fd48957097104283acfd0a35930b3afb00e42aaca923e53a6cc9caf
+  From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+  To:                  0x5fbdb2315678afecb367f032d93f642f64180aa3
+  Value:               0 ETH
+  Gas used:            22000 of 22000
+  Block #2:            0xafae1581e9bdfdfb52798a6c1924dfc5d813dc6491d2146596e985379efb61c0
+
+eth_getTransactionByHash
+eth_getTransactionReceipt
+eth_getBlockByNumber
