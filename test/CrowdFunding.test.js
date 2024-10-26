@@ -197,13 +197,13 @@ describe("CrowdFunding", function () {
 
         it("Should return correct total funds raised", async function () {
             await crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: minContribution });
-            await crowdFunding.connect(addr2).contribute("Jane", lastName, "jane@example.com", { value: minContribution * 2n });
+            await crowdFunding.connect(addr2).contribute(firstName, lastName, email, { value: minContribution * 2n });
             expect(await crowdFunding.getTotalFundsRaised()).to.equal(minContribution * 3n);
         });
 
         it("Should return correct total NFTs issued", async function () {
             await crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: minContribution });
-            await crowdFunding.connect(addr2).contribute("Jane", lastName, "jane@example.com", { value: minContribution });
+            await crowdFunding.connect(addr2).contribute(firstName, lastName, email, { value: minContribution });
             expect(await crowdFunding.getCountOfNFTsIssued()).to.equal(2);
         });
     });
