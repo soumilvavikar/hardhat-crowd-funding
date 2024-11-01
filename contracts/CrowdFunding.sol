@@ -230,6 +230,23 @@ contract CrowdFunding is ERC721 {
         s_minContribution = _newMinimumContribution;
     }
 
+    /**
+     * This function will be used to update the crowd funding end time
+     *
+     * @param _newEndTime - New end time of the CrowdFunding
+     *
+     * @notice - This function will only be called by the owner of the contract
+     * @notice - This function will only be called if the crowd funding is still open
+     * @notice - This function will only be called if the new end time is greater than the current time
+     */
+    function updateCrowdFundingEndTime(uint256 _newEndTime) public isOwner onlyIfCrowdFundingIsOpen {
+        if (_newEndTime <= block.timestamp) {
+            revert CrowdFundingErrors.CrowdFunding__NewEndTimeShouldBeGreaterThanCurrentTime(
+                "New end time should be greater than current time."
+            );
+        }
+        s_CrowdFundingEndTime = _newEndTime;
+    }
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////// EXTERNAL FUNCTIONS  //////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -370,6 +387,21 @@ contract CrowdFunding is ERC721 {
     }
 
     /**
+     * This function will be used to get the highest contributor
+     */
+    function getHighestContributor() public view returns (ContributorLib.Contributor memory) {
+        ContributorLib.Contributor memory highestContributor;
+        uint256 highestContribution = 0;
+        for (uint256 i = 0; i < s_contributors.length; i++) {
+            if (s_contributors[i].totalContributions > highestContribution) {
+                highestContribution = s_contributors[i].totalContributions;
+                highestContributor = s_contributors[i];
+            }
+        }
+        return highestContributor;
+    }
+
+    /**
      * This function will be called when we deploy the contract on the chain from the TokenModule.js
      */
     function isDeployed() external pure returns (string memory) {
@@ -396,7 +428,7 @@ contract CrowdFunding is ERC721 {
     function getCrowdFundingEndTime() public view returns (uint256) {
         return s_CrowdFundingEndTime;
     }
-    
+
     /**
      * This function will be used to check if the crowd funding is open or not
      */

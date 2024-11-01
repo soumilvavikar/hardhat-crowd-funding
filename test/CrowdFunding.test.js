@@ -22,14 +22,14 @@ describe("CrowdFunding", function () {
 
     // Constants to be used for the minimum contribution, goal, and duration
     const minContribution = BigInt(ethers.parseEther("0.1"));
-    const goal = BigInt(ethers.parseEther("10"));
+    const goal = BigInt(ethers.parseEther("1000"));
     const duration = 7 * 24 * 60 * 60; // 7 days
 
     /**
      * beforeEach hook to deploy the CrowdFunding contract
      */
     beforeEach(async function () {
-        [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+        [owner, addr1, addr2, addr3, ...addrs] = await ethers.getSigners();
         const CrowdFunding = await ethers.getContractFactory("CrowdFunding");
         crowdFunding = await CrowdFunding.deploy(minContribution, goal, duration);
         await crowdFunding.waitForDeployment();
@@ -213,7 +213,7 @@ describe("CrowdFunding", function () {
      */
     describe("updateCrowdFundingGoal", function () {
         it("Should allow owner to update the crowdfunding goal", async function () {
-            const newGoal = ethers.parseEther("15");
+            const newGoal = ethers.parseEther("1500");
             await crowdFunding.updateCrowdFundingGoal(newGoal);
             expect(await crowdFunding.s_crowdFundingGoal()).to.equal(newGoal);
         });
@@ -259,6 +259,56 @@ describe("CrowdFunding", function () {
             await expect(crowdFunding.connect(addr1).updateMinimumContribution(newMinContribution))
                 .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerCanWithdraw")
                 .withArgs("Only the owner can withdraw");
+        });
+    });
+
+    describe("getHighestContributor", function () {
+        it("should return empty contributor when there are no contributors", async function () {
+            const highestContributor = await crowdFunding.getHighestContributor();
+            expect(highestContributor.totalContributions).to.equal(0);
+        });
+
+        it("should return the highest contributor when there is only one contributor", async function () {
+            await crowdFunding.connect(addr1).contribute(firstName, lastName, email, { value: ethers.parseEther("1") });
+
+            const highestContributor = await crowdFunding.getHighestContributor();
+            expect(highestContributor.contributorAddress).to.equal(addr1);
+            expect(highestContributor.totalContributions).to.equal(ethers.parseEther("1"));
+        });
+
+        it("should return the highest contributor when there are multiple contributors", async function () {
+            await crowdFunding.connect(addr1).contribute("fname", "lname", "fn@gmail.com", { value: ethers.parseEther("1") });
+            await crowdFunding.connect(addr2).contribute("fname2", "lname2", "fn2@gmail.com", { value: ethers.parseEther("2") });
+            await crowdFunding.connect(addr3).contribute("fname3", "lname3", "fn3@gmail.com", { value: ethers.parseEther("0.5") });
+
+            const highestContributor = await crowdFunding.getHighestContributor();
+            expect(highestContributor.contributorAddress).to.equal(addr2.address);
+            expect(highestContributor.totalContributions).to.equal(ethers.parseEther("2"));
+        });
+
+        it("should return the first highest contributor when there are multiple contributors with the same highest contribution", async function () {
+            await crowdFunding.connect(addr1).contribute("fname", "lname", "fn@gmail.com", { value: ethers.parseEther("2") });
+            await crowdFunding.connect(addr2).contribute("fname2", "lname2", "fn2@gmail.com", { value: ethers.parseEther("2") });
+            await crowdFunding.connect(addr3).contribute("fname3", "lname3", "fn3@gmail.com", { value: ethers.parseEther("0.5") });
+
+            const highestContributor = await crowdFunding.getHighestContributor();
+            expect(highestContributor.contributorAddress).to.equal(addr1.address);
+            expect(highestContributor.totalContributions).to.equal(ethers.parseEther("2"));
+        });
+
+        it("should update highest contributor when a contributor increases their contribution", async function () {
+            await crowdFunding.connect(addr1).contribute("fname", "lname", "fn@gmail.com", { value: ethers.parseEther("1") });
+            await crowdFunding.connect(addr2).contribute("fname2", "lname2", "fn2@gmail.com", { value: ethers.parseEther("2") });
+
+            const highestContributor = await crowdFunding.getHighestContributor();
+            expect(highestContributor.contributorAddress).to.equal(addr2.address);
+            expect(highestContributor.totalContributions).to.equal(ethers.parseEther("2"));
+
+            await crowdFunding.connect(addr1).contribute("fname", "lname", "fn@gmail.com", { value: ethers.parseEther("2") });
+
+            const updatedHighestContributor = await crowdFunding.getHighestContributor();
+            expect(updatedHighestContributor.contributorAddress).to.equal(addr1.address);
+            expect(updatedHighestContributor.totalContributions).to.equal(ethers.parseEther("3"));
         });
     });
 });

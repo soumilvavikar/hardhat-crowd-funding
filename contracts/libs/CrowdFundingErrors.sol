@@ -12,4 +12,5 @@ library CrowdFundingErrors {
     error CrowdFunding__CallContributeFunction(string message);
     error CrowdFunding__NewGoalShouldBeGreaterThanTotalContributions(string message);
     error CrowdFunding__MinimumContributionMustBeGreaterThanZero(string message);
+    error CrowdFunding__NewEndTimeShouldBeGreaterThanCurrentTime(string message);
 }
