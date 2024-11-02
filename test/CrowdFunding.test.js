@@ -152,7 +152,7 @@ describe("CrowdFunding", function () {
 
         it("Should not allow non-owners to withdraw", async function () {
             await expect(crowdFunding.connect(addr1).withdraw())
-                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerCanWithdraw");
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerOperation");
         });
 
         it("Should not allow withdrawal before crowdfunding ends", async function () {
@@ -232,8 +232,8 @@ describe("CrowdFunding", function () {
         it("Should revert if called by non-owner", async function () {
             const newGoal = ethers.parseEther("15");
             await expect(crowdFunding.connect(addr1).updateCrowdFundingGoal(newGoal))
-                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerCanWithdraw")
-                .withArgs("Only the owner can withdraw");
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerOperation")
+                .withArgs("Only the owner can perform this operation");
         });
     });
 
@@ -257,8 +257,8 @@ describe("CrowdFunding", function () {
         it("Should revert if called by non-owner", async function () {
             const newMinContribution = ethers.parseEther("0.2");
             await expect(crowdFunding.connect(addr1).updateMinimumContribution(newMinContribution))
-                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerCanWithdraw")
-                .withArgs("Only the owner can withdraw");
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerOperation")
+                .withArgs("Only the owner can perform this operation");
         });
     });
 
@@ -309,6 +309,48 @@ describe("CrowdFunding", function () {
             const updatedHighestContributor = await crowdFunding.getHighestContributor();
             expect(updatedHighestContributor.contributorAddress).to.equal(addr1.address);
             expect(updatedHighestContributor.totalContributions).to.equal(ethers.parseEther("3"));
+        });
+    });
+
+    describe("closeCrowdFunding", function () {
+        it("should close the crowd funding", async function () {
+            await crowdFunding.closeCrowdFunding();
+
+            const isOpen = await crowdFunding.isOpen();
+            expect(isOpen).to.be.false;
+        });
+    });
+
+    describe("updateCrowdFundingEndTime", function () {
+        it("should update the end time when called by the owner", async function () {
+            const currentTime = Math.ceil(Date.now() / 1000);
+            const newEndTime = currentTime + (100 * 24 * 60 * 60); // 100 day from now
+
+            await crowdFunding.updateCrowdFundingEndTime(newEndTime);
+
+            const updatedEndTime = await crowdFunding.s_CrowdFundingEndTime();
+            expect(updatedEndTime).to.equal(newEndTime);
+        });
+
+        it("should revert when called by a non-owner", async function () {
+            const currentTime = Math.floor(Date.now() / 1000);
+            const newEndTime = currentTime + 3600; // 1 hour from now
+
+            await expect(crowdFunding.connect(addr1).updateCrowdFundingEndTime(newEndTime))
+                .to.be.revertedWithCustomError(crowdFunding, "CrowdFunding__OnlyOwnerOperation")
+                .withArgs("Only the owner can perform this operation");
+        });
+
+        it("should revert when new end time is not greater than current time", async function () {
+            const currentTime = Math.floor(Date.now() / 1000);
+            const newEndTime = currentTime - 3600; // 1 hour ago
+
+            await expect(
+                crowdFunding.updateCrowdFundingEndTime(newEndTime)
+            ).to.be.revertedWithCustomError(
+                crowdFunding,
+                "CrowdFunding__NewEndTimeShouldBeGreaterThanCurrentTime"
+            ).withArgs("New end time should be greater than current time.");
         });
     });
 });

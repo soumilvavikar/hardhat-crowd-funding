@@ -72,12 +72,16 @@ async function main() {
     await checkContributionsMade(crowdFundingContract2);
     // Step 4: Test Withdraw - Withdraw the funds from the crowd funding
     await withdrawFunds(crowdFundingOwnerContract);
-    // Step 5: Update the funding goal and minimum contribution
+    // Step 5: Update the funding goal, minimum contribution, and crowd funding end time
     await updateFundingGoalAndMinimumContribution(crowdFundingOwnerContract);
+    await updateCrowdFundingEndTime(crowdFundingOwnerContract);
     // Step 5.1: Testing standard getter functions
     await testStandardGetterFunctions(crowdFundingOwnerContract);
     // Step 6: Test Owner Functions
     await testOwnerFunctions(crowdFundingOwnerContract);
+    // Step 7: Close the crowd funding
+    await crowdFundingOwnerContract.closeCrowdFunding();
+    console.log("Is Crowd funding open: ", await crowdFundingOwnerContract.isCrowdFundingOpen());
     console.log("********************************************************");
 }
 
@@ -106,6 +110,7 @@ async function contributeToCrowdFunding(crowdFundingContract) {
     } catch (error) {
         console.error("Error:", error.message);
     }
+    console.log("********************************************************");
 }
 
 // This function will check the total contributions made by the contributor
@@ -116,6 +121,7 @@ async function checkContributionsMade(crowdFundingContract) {
     // Check the balance of the contractAddress
     const totalContributionsMade = BigInt(await crowdFundingContract.getTotalContributionByContributor());
     console.log("Total Contributions Made (ETH):  ", Number(totalContributionsMade) / Number(1e18));
+    console.log("********************************************************");
 }
 
 // This function will test the standard getter functions
@@ -141,6 +147,7 @@ async function testStandardGetterFunctions(crowdFunding) {
 
     // Check if the crowd funding is open
     console.log("Is Crowd Funding Open: ", await crowdFunding.isCrowdFundingOpen());
+    console.log("********************************************************");
 }
 
 // This function will contribute to reach the funding goal limit
@@ -161,6 +168,7 @@ async function contributeToReachFundingGoalLimit(crowdFundingContract) {
     } catch (error) {
         console.error("Error:", error.message);
     }
+    console.log("********************************************************");
 }
 
 // This function will update the funding goal and minimum contribution
@@ -188,6 +196,7 @@ async function updateFundingGoalAndMinimumContribution(crowdFunding) {
     // Get the minimum contribution
     const minimiumContributionAfterUpdate = await crowdFunding.getMinimumContribution();
     console.log("Minimium Contribution (ETH) after Update:  ", Number(minimiumContributionAfterUpdate) / Number(1e18));
+    console.log("********************************************************");
 }
 
 // This function will withdraw the funds from the crowd funding
@@ -209,6 +218,7 @@ async function withdrawFunds(crowdFunding) {
     const fundsRaisedAfterWithdraw = await crowdFunding.getTotalFundsRaised();
     // This should be zero after the withdraw has happened.
     console.log("Total Funds (ETH) in the funding (post withdrawl):  ", Number(fundsRaisedAfterWithdraw) / Number(1e18));
+    console.log("********************************************************");
 }
 
 // This function will test the owner functions
@@ -227,4 +237,25 @@ async function testOwnerFunctions(crowdFunding) {
     // Check the balance of the contractAddress
     const fundsRaised = await crowdFunding.getTotalFundsRaised();
     console.log("Total Funds Raised (ETH):  ", Number(fundsRaised) / Number(1e18));
+    console.log("********************************************************");
+}
+
+// This function will update the crowd funding end time
+async function updateCrowdFundingEndTime(crowdFunding) {
+    console.log("********************************************************");
+    console.log("Updating the crowd funding end time");
+    console.log("********************************************************");
+    // Get the crowd funding end time
+    const endTime = await crowdFunding.getCrowdFundingEndTime();
+    console.log("Crowd funding End Time:", endTime);
+
+    const currentTime = Math.ceil(Date.now() / 1000);
+    const newEndTime = currentTime + (100 * 24 * 60 * 60); // 100 day from now
+    // Update the crowd funding end time
+    await crowdFunding.updateCrowdFundingEndTime(BigInt(newEndTime));
+
+    // Get the crowd funding end time
+    const endTimeAfterUpdate = await crowdFunding.getCrowdFundingEndTime();
+    console.log("Crowd funding End Time after Update:", endTimeAfterUpdate);
+    console.log("********************************************************");
 }

@@ -32,7 +32,7 @@ contract CrowdFunding is ERC721 {
     // Total Contributions
     uint256 public s_totalContributions;
     // CrowdFunding Open or Closed
-    bool public isOpen;
+    bool public s_isOpen;
 
     // Token URI - Uploaded an image of my bike and converted that into a token URI. Documentation at https://docs.ipfs.tech/concepts/what-is-ipfs/
     // Image file: https://ipfs.io/ipfs/QmXW1JcRvBuzW7v5KkxyWxrsWWtJJiGQNTdCuUceYC2Nw2?filename=bike.png
@@ -59,7 +59,7 @@ contract CrowdFunding is ERC721 {
         // Set the end time of the CrowdFunding
         s_CrowdFundingEndTime = block.timestamp + _duration;
         // Set the crowd funding state to open
-        isOpen = true;
+        s_isOpen = true;
 
         console.log("CrowdFunding contract deployed by %s", i_owner);
         console.log("Minimum Contribution: %s", s_minContribution);
@@ -76,7 +76,7 @@ contract CrowdFunding is ERC721 {
     modifier isOwner() {
         // _; >> before the code here means this modifier will execute after the function logic
         if (msg.sender != i_owner) {
-            revert CrowdFundingErrors.CrowdFunding__OnlyOwnerCanWithdraw("Only the owner can withdraw");
+            revert CrowdFundingErrors.CrowdFunding__OnlyOwnerOperation("Only the owner can perform this operation");
         }
         // _; >> after the code here means this modifier will execute before the function logic
         _;
@@ -86,7 +86,7 @@ contract CrowdFunding is ERC721 {
      * This modifier will check whether the crowd funding is closed or not
      */
     modifier onlyIfCrowdFundingIsClosed() {
-        if ((block.timestamp < s_CrowdFundingEndTime) && isOpen) {
+        if ((block.timestamp < s_CrowdFundingEndTime) && s_isOpen) {
             revert CrowdFundingErrors.CrowdFunding__CrowdFundingIsStillOpen("Crowdfunding is still open");
         }
         _;
@@ -96,7 +96,7 @@ contract CrowdFunding is ERC721 {
      * This modifier will check whether the crowd funding is open or not
      */
     modifier onlyIfCrowdFundingIsOpen() {
-        if (!isOpen) {
+        if (!s_isOpen) {
             revert CrowdFundingErrors.CrowdFunding__CrowdFundingIsClosed("Crowdfunding is closed");
         }
 
@@ -171,7 +171,7 @@ contract CrowdFunding is ERC721 {
         // Check if the total contributions are greater than or equal to the crowd funding goal
         // If yes, then close the crowd funding
         if (s_totalContributions >= s_crowdFundingGoal) {
-            isOpen = false;
+            s_isOpen = false;
         }
     }
 
@@ -210,7 +210,7 @@ contract CrowdFunding is ERC721 {
 
         s_crowdFundingGoal = _newGoal;
         // if the limit to funding was reached, the contract would have closed the crowd funding. Hence need to open it again
-        isOpen = true;
+        s_isOpen = true;
     }
 
     /**
@@ -247,6 +247,16 @@ contract CrowdFunding is ERC721 {
         }
         s_CrowdFundingEndTime = _newEndTime;
     }
+
+    /**
+     * This function will be used to close the crowd funding
+     *
+     * @notice - This function will only be called by the owner of the contract
+     */
+    function closeCrowdFunding() public isOwner {
+        s_isOpen = false;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////// EXTERNAL FUNCTIONS  //////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -433,7 +443,7 @@ contract CrowdFunding is ERC721 {
      * This function will be used to check if the crowd funding is open or not
      */
     function isCrowdFundingOpen() public view returns (bool) {
-        return isOpen;
+        return s_isOpen;
     }
 
     /**
@@ -443,5 +453,12 @@ contract CrowdFunding is ERC721 {
      */
     function getTokenURI(uint256 tokenId) public view returns (string memory) {
         return s_tokenIdToUri[tokenId];
+    }
+
+    /**
+     * This function will be used to check if the crowd funding is open or not
+     */
+    function isOpen() public view returns (bool) {
+        return s_isOpen;
     }
 }
