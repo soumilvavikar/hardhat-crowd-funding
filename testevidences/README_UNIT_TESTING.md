@@ -7,9 +7,9 @@
 npx hardhat test
 ```
 
-## Evidences
+## Evidences - Crowd Funding Contract
 
-The logs of the unit tests are captured in [unit-testing-evidence.txt](txtfiles/unit-testing-evidence.txt) file.
+The logs of the unit tests are captured in [unit-testing-evidence.txt](txtfiles/unit-testing-evidence.txt) and [unit-testing-evidence-fac-contract.txt](testevidences/txtfiles/unit-testing-evidence-factory-included.txt) files.
 
 ### Deployment
 
@@ -34,3 +34,7 @@ The logs of the unit tests are captured in [unit-testing-evidence.txt](txtfiles/
 ### Updating Crwod Funding
 
 ![Unit Tests for Updating Crowd Funding](imgs/img-ut-update-cf.png)
+
+## Evidences - Crowd Funding Factory Contract
+
+![Unit Tests for Crowd Funding Factory Contract](imgs/img-ut-crowd-funding-fac.png)
