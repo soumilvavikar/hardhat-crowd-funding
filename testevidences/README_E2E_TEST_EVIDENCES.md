@@ -1,9 +1,11 @@
 # End to End Testing
 
-## Command
+## Commands
 
 ```shell
 npx hardhat run interactions/end-to-end/InteractingWithCrowdFundingContract.js --network localhost
+
+npx hardhat run interactions/end-to-end/InteractingWithCrowdFundingFactoryContract.js --network localhost
 ```
 
 ## Test Evidence(s)

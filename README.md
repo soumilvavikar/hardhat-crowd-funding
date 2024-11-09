@@ -76,6 +76,8 @@ Unit testing evidences are documented in the [README_UNIT_TESTING.md](testeviden
 npx hardhat node
 # Deploy the contract / hardhat project
 npx hardhat ignition deploy ignition/modules/CrowdFundingModule.js --network localhost
+# Deploying the crowd funding factory contract
+npx hardhat ignition deploy ignition/modules/CrowdFundingFactoryModule.js --network localhost
 
 ## NOTES:
 ### If in the above command, the --network localhost is not passed, then it by default deploys to local network.
@@ -91,8 +93,10 @@ Local Chain Start-up and Contract deployment evidences are documented in the [RE
 ### Command for End to End Testing via Interactions
 
 ```shell
-# Run all the functions to test the flow end to end.
+# Run all the functions to test the flow end to end (directly via crowd funding contract).
 npx hardhat run interactions/end-to-end/InteractingWithCrowdFundingContract.js --network localhost
+# Run all the functions to test the flow end to end using the factory 
+npx hardhat run interactions/end-to-end/InteractingWithCrowdFundingFactoryContract.js --network localhost
 ```
 
 The end to end testing test evidences are documented in the [README_E2E_TEST_EVIDENCES.md](testevidences/README_E2E_TEST_EVIDENCES.md).

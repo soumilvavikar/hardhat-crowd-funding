@@ -7,6 +7,8 @@
 npx hardhat node
 # Deploy the contract / hardhat project
 npx hardhat ignition deploy ignition/modules/CrowdFundingModule.js --network localhost
+# Deploying the factory contract
+npx hardhat ignition deploy ignition/modules/CrowdFundingFactoryModule.js --network localhost
 
 ## NOTES:
 ### If in the above command, the --network localhost is not passed, then it by default deploys to local network.
@@ -26,3 +28,11 @@ The logs of the contract deployment are captured in the [contract-deploy-evidenc
 ![Contract Deployment](imgs/img-contract-deploy.png)
 
 ![Local Chain Logs for Contract Deployment](imgs/img-local-chain-contract-deploy.png)
+
+## Crowd Funding Factory Contract Deployment
+
+The logs of the contract deployment are captured in the [factory-contract-deploy-evidence.txt](txtfiles/fac-contract-deploy-evidence.txt) file.
+
+![Factory Contract Deployment](imgs/img-fac-contract-deploy.png)
+
+![Local Chain Logs for Factory Contract Deployment](imgs/img-local-chain-fac-contract-deploy.png)
