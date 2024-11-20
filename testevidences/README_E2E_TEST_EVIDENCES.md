@@ -14,3 +14,7 @@ The logs of the end to end tests are captured in [e2e-crowd-funding-test-evidenc
 
 ![E2E Testing Evidence](imgs/e2e-test-evidence.png)
 ![E2E Testing Evidence - Owner Functions](imgs/e2e-test-evidence-own-fns.png)
+
+Test Evidence for Factory contract functions
+
+![Factory Functions Test Evidence](imgs/e2e-factory-fns-test-evidence.png)
